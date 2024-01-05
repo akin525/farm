@@ -27,7 +27,7 @@ class PurchaseController
         $am2=Payment::where([['created_at', 'like', '%'. Carbon::now()->subDays(2)->format('y-m-d'). '%']])->sum('amount');
 
 
-        return view('Payment', ['data' => $data,'amount'=>$amount, 'am'=>$am, 'am1'=>$am1, 'am2'=>$am2,  'tt' => $tt, 'ft' => $ft, 'st' => $st, 'rt' => $rt]);
+        return view('payment', ['data' => $data,'amount'=>$amount, 'am'=>$am, 'am1'=>$am1, 'am2'=>$am2,  'tt' => $tt, 'ft' => $ft, 'st' => $st, 'rt' => $rt]);
 
     }
     public function bill()
