@@ -30,8 +30,15 @@ class SaleController extends Controller
             'sale_date' => $request->input('sale_date'),
         ]);
 
-        return redirect()->route('sales.index')->with('success', 'Sale recorded successfully.');
+        return redirect()->route('createsales')->with('success', 'Sale recorded successfully.');
     }
 
     // Add other methods as needed (index, show, edit, update, delete)
+
+    function allsales()
+    {
+        $data=Sale::all();
+
+        return view('allsale', compact('data'));
+    }
 }

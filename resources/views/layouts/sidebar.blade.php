@@ -45,6 +45,26 @@
         <img src="{{asset('images/pre.gif')}}" alt="">
     </div>
 </div>
+@if(Session::has('error'))
+    <script>
+        Swal.fire({
+            title: 'Ooops..',
+            text: '{{ Session::get('error') }}',
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+        })
+    </script>
+@endif
+@if(Session::has('success'))
+    <script>
+        Swal.fire({
+            title: 'success',
+            text: '{{ Session::get('success') }}',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+        })
+    </script>
+@endif
 <!--*******************
     Preloader end
 ********************-->
@@ -370,7 +390,8 @@
                         <span class="nav-text">Sales</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="#">All Sales</a></li>
+                        <li><a href="{{route('createsales')}}">Create Sales</a></li>
+                        <li><a href="{{route('allsales')}}">All Sales</a></li>
 
                     </ul>
                 </li>

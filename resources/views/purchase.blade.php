@@ -8,6 +8,9 @@
                     <div class="tbl-caption">
                         <h4 class="heading mb-0">All Purchase</h4>
                     </div>
+                    <div class="d-flex align-items-center">
+                        <a href="{{route('exportpur')}}" class="btn btn-primary btn-sm ms-2"><i class="fa fa-file-excel"></i> Export(csv)</a>
+                    </div>
                     <table id="example" class="display table" style="min-width: 845px">
                         <thead>
                         <tr>

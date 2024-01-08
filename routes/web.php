@@ -5,6 +5,7 @@ use App\Http\Controllers\QueryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SaleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,10 +46,14 @@ Route::middleware([
 
     Route::get('exportuser', [\App\Http\Controllers\ExportController::class, 'exportusers'])->name('exportuser');
     Route::get('exportpay', [\App\Http\Controllers\ExportController::class, 'exportalllpayment'])->name('exportpay');
+    Route::get('exportpur', [\App\Http\Controllers\ExportController::class, 'exportalllpurchase'])->name('exportpur');
+    Route::get('exportsale', [\App\Http\Controllers\ExportController::class, 'exportalllsales'])->name('exportsale');
 
-    Route::get('/sales/create', 'SaleController@create')->name('sales.create');
-    Route::post('/sales', 'SaleController@store')->name('sales.store');
+    Route::get('createsales', [SaleController::class, 'create'])->name('createsales');
+    Route::post('/sales', [SaleController::class,'store'])->name('sales.store');
 // Add other routes as needed
+
+    Route::get('allsales', [SaleController::class, 'allsales'])->name('allsales');
 
 });
 Route::get('/logout', function(){
