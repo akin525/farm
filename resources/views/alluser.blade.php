@@ -72,7 +72,7 @@
                     </button>
                 </li>
             </ul>
-            <a href="#" class="btn btn-primary btn-sm ms-2">+ Add Inventory</a>
+            <a href="{{route('exportuser')}}" class="btn btn-primary btn-sm ms-2"><i class="fa fa-file-excel"></i> Export(csv)</a>
         </div>
     </div>
     <div class="col-xl-12 active-p">

@@ -43,6 +43,13 @@ Route::middleware([
     Route::get('profile/{username}', [UserController::class, 'profile'])->name('profile');
     Route::post('update', [UserController::class, 'updateuser'])->name('update');
 
+    Route::get('exportuser', [\App\Http\Controllers\ExportController::class, 'exportusers'])->name('exportuser');
+    Route::get('exportpay', [\App\Http\Controllers\ExportController::class, 'exportalllpayment'])->name('exportpay');
+
+    Route::get('/sales/create', 'SaleController@create')->name('sales.create');
+    Route::post('/sales', 'SaleController@store')->name('sales.store');
+// Add other routes as needed
+
 });
 Route::get('/logout', function(){
     Auth::logout();
