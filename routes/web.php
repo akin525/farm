@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\QueryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -48,12 +49,21 @@ Route::middleware([
     Route::get('exportpay', [\App\Http\Controllers\ExportController::class, 'exportalllpayment'])->name('exportpay');
     Route::get('exportpur', [\App\Http\Controllers\ExportController::class, 'exportalllpurchase'])->name('exportpur');
     Route::get('exportsale', [\App\Http\Controllers\ExportController::class, 'exportalllsales'])->name('exportsale');
+    Route::get('exportin', [\App\Http\Controllers\ExportController::class, 'exportin'])->name('exportin');
 
     Route::get('createsales', [SaleController::class, 'create'])->name('createsales');
     Route::post('/sales', [SaleController::class,'store'])->name('sales.store');
 // Add other routes as needed
 
     Route::get('allsales', [SaleController::class, 'allsales'])->name('allsales');
+
+    Route::get('/inventory/create', [InventoryController::class, 'create'])->name('inventory/create');
+    Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory');
+    Route::get('/allinventory', [InventoryController::class, 'allinventory'])->name('allinventory');
+    Route::post('/update', [InventoryController::class, 'updateinventory'])->name('update');
+// Add other routes as needed
+    Route::get('/get-product-details', [InventoryController::class, 'getRemainingQuantity']);
+
 
 });
 Route::get('/logout', function(){

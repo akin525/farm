@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Inventory;
 use App\Models\Payment;
 use App\Models\Purchase;
 use App\Models\Sale;
@@ -123,6 +124,26 @@ class ExportController
             ->headerStyle($header_style)
             ->rowsStyle($rows_style)
             ->download('Sales.csv');
+
+//     (new FastExcel($this->usersGenerator()))->export('test.xlsx');
+
+    }
+    function exportin()
+    {
+        $pay = Inventory::all();
+
+// Export all users
+        $header_style = (new Style())->setFontBold();
+
+        $rows_style = (new Style())
+            ->setFontSize(11)
+            ->setShouldWrapText()
+            ->setBackgroundColor("EDEDED");
+
+        return (new FastExcel($pay))
+            ->headerStyle($header_style)
+            ->rowsStyle($rows_style)
+            ->download('Inventory.csv');
 
 //     (new FastExcel($this->usersGenerator()))->export('test.xlsx');
 

@@ -1,8 +1,6 @@
 @extends('layouts.sidebar')
-@section('tittle', 'Sales Create')
+@section('tittle', 'Inventory Create')
 @section('content')
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
     <style>
         .subscribe {
             position: relative;
@@ -66,8 +64,8 @@
 										<i class="la la-bookmark"></i>
 									</span>
                 <div class="media-body text-white">
-                    <p class="mb-1">Create Sales Record</p>
-                    <h3 class="text-white">Sales</h3>
+                    <p class="mb-1">Create Inventory</p>
+                    <h3 class="text-white">Inventory</h3>
 
                 </div>
             </div>
@@ -78,99 +76,57 @@
         <div class="loading-overlay" id="loadingSpinner" style="display: none;">
             <div class="loading-spinner"></div>
         </div>
+        <div class="loading-overlay" id="loadingSpinner" style="display: none;">
+            <div class="loading-spinner"></div>
+        </div>
         <div class="card card-body">
             <form class="subscribe" id="dataForm">
-        @csrf
-        <!-- Add form fields for product_name, quantity, unit_price, and sale_date -->
-            <x-validation-errors class="alert alert-danger" />
+            @csrf
+            <!-- Add form fields for product_name, quantity, unit_price, and sale_date -->
+                <x-validation-errors class="alert alert-danger" />
 
-            <div id="div_id_network" class="form-group">
-                <label for="network" class=" requiredField">
-                    Product Available:<span class="asteriskField">*</span>
-                </label>
-                <div class="">
-                    <select id="productSelect"  class="text-success form-control" name="product_name" required>
-                        <option>Select Product</option>
-                        @foreach($in as $inven)
-                            <option value="{{$inven['id']}}">{{$inven['product_name']}}</option>
-                        @endforeach
-                    </select>
+                <div id="div_id_network" class="form-group">
+                    <label for="network" class=" requiredField">
+                        Product Name:<span class="asteriskField">*</span>
+                    </label>
+                    <div class="">
+                        <input type="text" class="text-success form-control" name="product_name" required>
 
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="quantity" class="requiredField">
-                    Remaining Quantity:<span class="asteriskField">*</span>
-                </label>
-                <div>
-                    <input type="text" id="remainingQuantity" class="form-control text-success" readonly>
-                </div>
-            </div>
-            <div id="div_id_network" class="form-group">
-                <label for="network" class=" requiredField">
-                    Quantity:<span class="asteriskField">*</span>
-                </label>
-                <div class="">
-                    <input type="number" class="text-success form-control" name="quantity" required>
+                <div id="div_id_network" class="form-group">
+                    <label for="network" class=" requiredField">
+                        Quantity:<span class="asteriskField">*</span>
+                    </label>
+                    <div class="">
+                        <input type="number" class="text-success form-control" name="quantity" required>
 
+                    </div>
                 </div>
-            </div>
-{{--            <div id="div_id_network" class="form-group">--}}
-{{--                <label for="network" class=" requiredField">--}}
-{{--                    Unit Price:<span class="asteriskField">*</span>--}}
-{{--                </label>--}}
-{{--                <div class="">--}}
-{{--                    <input type="number" class="text-success form-control" name="unit_price" required>--}}
+                <div id="div_id_network" class="form-group">
+                    <label for="network" class=" requiredField">
+                        Unit Price:<span class="asteriskField">*</span>
+                    </label>
+                    <div class="">
+                        <input type="number" class="text-success form-control" name="unit_price" required>
 
-{{--                </div>--}}
-{{--            </div>--}}
-            <div class="form-group">
-                <label for="unit_price" class="requiredField">
-                    Unit Price:<span class="asteriskField">*</span>
-                </label>
-                <div>
-                    <input type="text" id="unitPrice" class="form-control" name="unit_price" readonly/>
+                    </div>
                 </div>
-            </div>
-            <div id="div_id_network" class="form-group">
-                <label for="network" class=" requiredField">
-                    Sale Date:<span class="asteriskField">*</span>
-                </label>
-                <div class="">
-                    <input type="date" class="text-success form-control" name="sale_date" required>
+                <div id="div_id_network" class="form-group">
+                    <label for="network" class=" requiredField">
+                        purchase_date:<span class="asteriskField">*</span>
+                    </label>
+                    <div class="">
+                        <input type="date" class="text-success form-control" name="purchase_date" required>
 
+                    </div>
                 </div>
-            </div>
 
-            <button type="submit" class="btn btn-success submit-btn">Create Sale</button>
-        </form>
+                <button type="submit" class="btn btn-success submit-btn">Create</button>
+            </form>
         </div>
 
     </div>
-    <script>
-        $(document).ready(function () {
-            // Add an event listener to the select input
-            $('#productSelect').on('change', function () {
-                // Get the selected product's id
-                var productId = $(this).val();
-
-                // Make an AJAX request to fetch the remaining quantity and unit price
-                $.ajax({
-                    url: '/get-product-details', // Replace with your actual route
-                    type: 'GET',
-                    data: {id: productId},
-                    success: function (response) {
-                        // Update the values of the remainingQuantity and unitPrice inputs
-                        $('#remainingQuantity').val(response.quantity);
-                        $('#unitPrice').val(response.unit_price);
-                    },
-                    error: function (error) {
-                        console.error('Error fetching product details:', error);
-                    }
-                });
-            });
-        });
-    </script>
     <script>
         $(document).ready(function() {
 
@@ -187,7 +143,7 @@
                 $('#loadingSpinner').show();
 
                 $.ajax({
-                    url: "{{route('sales.store')}}",
+                    url: "{{route('inventory')}}",
                     type: 'POST',
                     data: formData,
                     success: function(response) {
@@ -231,6 +187,5 @@
         });
 
     </script>
-
 
 @endsection
