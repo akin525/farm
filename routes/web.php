@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FarmController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\QueryController;
 use App\Http\Controllers\UserController;
@@ -64,6 +65,10 @@ Route::middleware([
 // Add other routes as needed
     Route::get('/get-product-details', [InventoryController::class, 'getRemainingQuantity']);
 
+
+
+    Route::get('createfarm', [FarmController::class, 'creaefarmindex'])->name('createfarm');
+    Route::post('farm', [FarmController::class, 'store'])->name('farm');
 
 });
 Route::get('/logout', function(){
