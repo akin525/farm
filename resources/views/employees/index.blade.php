@@ -1,5 +1,5 @@
 @extends('layouts.sidebar')
-@section('tittle', 'Create Farm')
+@section('tittle', 'Employee')
 @section('content')
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -78,7 +78,7 @@
 										<i class="la la-bookmark"></i>
 									</span>
                                         <div class="media-body text-white">
-                                            <p class="mb-1">Create Farm</p>
+                                            <p class="mb-1">Create Employee</p>
                                             {{--                    <h3 class="text-white">Sales</h3>--}}
 
                                         </div>
@@ -89,36 +89,33 @@
                             <div class="modal-body">
                                 <div class="card card-body">
                                     <form class="subscribe" id="dataForm">
-                                    @csrf
+                                        @csrf
 
-                                        <div class="row">
-                                            <div class="col-lg-6 mb-2">
-                                                <div class="mb-3">
-                                                    <label class="text-label form-label">Farm Name:</label>
-                                                    <input type="text" name="farmname" class="form-control" placeholder="Parsley" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 mb-2">
-                                                <div class="mb-3">
-                                                    <label class="text-label form-label">Contact Number*</label>
-                                                    <input type="number" name="number" class="form-control" placeholder="Montana" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 mb-2">
-                                                <div class="mb-3">
-                                                    <label class="text-label form-label">Unit Name*</label>
-                                                    <input type="text" name="unit_name[]" class="form-control" placeholder="Montana" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 mb-2">
-                                                <div class="mb-3">
-                                                    <label class="text-label form-label" for="unit_description">Unit Description:</label>
-                                                    <textarea name="unit_description[]" class="form-control" rows="3" required></textarea>
-                                                </div>
-                                                <div id="additional_units"></div>
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="name">Name:</label>
+                                            <input type="text" name="name" class="form-control" required>
                                         </div>
-                                        <button type="submit" class="btn btn-success submit-btn">Create Farm</button>
+
+                                        <div class="form-group">
+                                            <label for="contact_number">Contact Number:</label>
+                                            <input type="text" name="contact_number" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="salary">Salary:</label>
+                                            <input type="number" name="salary" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="unit">Select Farm Unit:</label>
+                                            <select name="unit" class="form-control">
+                                                @foreach($farmUnits as $farmUnit)
+                                                    <option value="{{ $farmUnit->id }}">{{ $farmUnit->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-success submit-btn">Create Employee</button>
                                     </form>
                                 </div>
 
@@ -154,7 +151,7 @@
 
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a  class="btn btn-primary btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#newspends"><i class="fa fa-file-user"></i> +Create FarmSetup</a>
+                            <a  class="btn btn-primary btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#newspends"><i class="fa fa-file-user"></i> +Add Employee</a>
                         </li>
                     </ul>
                 </div>
@@ -162,31 +159,24 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Farm Name</th>
+                        <th>Employee</th>
+                        <th>Unit</th>
+                        <th>Salary</th>
                         <th>Contact Number</th>
-                        <th>Unit Name</th>
-                        <th>Unit Description</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($farm as $farmSetup)
+                    @forelse($employee as $farmSetup)
                         <tr>
                             <td>{{ $farmSetup->id }}</td>
                             <td>{{ $farmSetup->name }}</td>
+                            <td>{{ $farmSetup->unit }}</td>
+                            <td>{{ $farmSetup->salary }}</td>
                             <td>{{ $farmSetup->contact_number }}</td>
-
-                            @if ($farmSetup->units)
-                                @foreach($farmSetup->units as $farmUnit)
-                                    <td>{{ $farmUnit->name }}</td>
-                                    <td>{{ $farmUnit->description }}</td>
-                                @endforeach
-                            @else
-                                <td colspan="4">No farm units found.</td>
-                            @endif
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5">No farm setups found.</td>
+                            <td colspan="5">No farm employee found.</td>
                         </tr>
                     @endforelse
                     </tbody>
@@ -196,30 +186,6 @@
 
 
     </div>
-    <script>
-        $(document).ready(function () {
-            // Add an event listener to the select input
-            $('#productSelect').on('change', function () {
-                // Get the selected product's id
-                var productId = $(this).val();
-
-                // Make an AJAX request to fetch the remaining quantity and unit price
-                $.ajax({
-                    url: '/get-product-details', // Replace with your actual route
-                    type: 'GET',
-                    data: {id: productId},
-                    success: function (response) {
-                        // Update the values of the remainingQuantity and unitPrice inputs
-                        $('#remainingQuantity').val(response.quantity);
-                        $('#unitPrice').val(response.unit_price);
-                    },
-                    error: function (error) {
-                        console.error('Error fetching product details:', error);
-                    }
-                });
-            });
-        });
-    </script>
     <script>
         $(document).ready(function() {
 
@@ -236,7 +202,7 @@
                 $('#loadingSpinner').show();
 
                 $.ajax({
-                    url: "{{route('farm')}}",
+                    url: "{{route('employ')}}",
                     type: 'POST',
                     data: formData,
                     success: function(response) {

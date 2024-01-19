@@ -5,12 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FarmSetup extends Model
+class Vendor extends Model
 {
     protected $fillable = ['name', 'contact_number'];
-
-    public function Units()
-    {
-        return $this->hasMany(FarmUnit::class);
-    }
 }
+

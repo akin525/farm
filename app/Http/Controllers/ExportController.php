@@ -4,6 +4,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Customer;
+use App\Models\FarmActivity;
+use App\Models\FarmSetup;
 use App\Models\Inventory;
 use App\Models\Payment;
 use App\Models\Purchase;
@@ -144,6 +147,66 @@ class ExportController
             ->headerStyle($header_style)
             ->rowsStyle($rows_style)
             ->download('Inventory.csv');
+
+//     (new FastExcel($this->usersGenerator()))->export('test.xlsx');
+
+    }
+    function exportcustomer()
+    {
+        $pay = Customer::all();
+
+// Export all users
+        $header_style = (new Style())->setFontBold();
+
+        $rows_style = (new Style())
+            ->setFontSize(11)
+            ->setShouldWrapText()
+            ->setBackgroundColor("EDEDED");
+
+        return (new FastExcel($pay))
+            ->headerStyle($header_style)
+            ->rowsStyle($rows_style)
+            ->download('Customers.csv');
+
+//     (new FastExcel($this->usersGenerator()))->export('test.xlsx');
+
+    }
+    function exportfarm()
+    {
+        $pay = FarmSetup::with('Units')->get();
+
+// Export all users
+        $header_style = (new Style())->setFontBold();
+
+        $rows_style = (new Style())
+            ->setFontSize(11)
+            ->setShouldWrapText()
+            ->setBackgroundColor("EDEDED");
+
+        return (new FastExcel($pay))
+            ->headerStyle($header_style)
+            ->rowsStyle($rows_style)
+            ->download('Farms.csv');
+
+//     (new FastExcel($this->usersGenerator()))->export('test.xlsx');
+
+    }
+    function exportactive()
+    {
+        $pay = FarmActivity::all();
+
+// Export all users
+        $header_style = (new Style())->setFontBold();
+
+        $rows_style = (new Style())
+            ->setFontSize(11)
+            ->setShouldWrapText()
+            ->setBackgroundColor("EDEDED");
+
+        return (new FastExcel($pay))
+            ->headerStyle($header_style)
+            ->rowsStyle($rows_style)
+            ->download('Activities.csv');
 
 //     (new FastExcel($this->usersGenerator()))->export('test.xlsx');
 

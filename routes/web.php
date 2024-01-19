@@ -51,6 +51,9 @@ Route::middleware([
     Route::get('exportpur', [\App\Http\Controllers\ExportController::class, 'exportalllpurchase'])->name('exportpur');
     Route::get('exportsale', [\App\Http\Controllers\ExportController::class, 'exportalllsales'])->name('exportsale');
     Route::get('exportin', [\App\Http\Controllers\ExportController::class, 'exportin'])->name('exportin');
+    Route::get('exportcus', [\App\Http\Controllers\ExportController::class, 'exportcustomer'])->name('exportcus');
+    Route::get('exportfarm', [\App\Http\Controllers\ExportController::class, 'exportfarm'])->name('exportfarm');
+    Route::get('exportactive', [\App\Http\Controllers\ExportController::class, 'exportactive'])->name('exportactive');
 
     Route::get('createsales', [SaleController::class, 'create'])->name('createsales');
     Route::post('/sales', [SaleController::class,'store'])->name('sales.store');
@@ -69,6 +72,18 @@ Route::middleware([
 
     Route::get('createfarm', [FarmController::class, 'creaefarmindex'])->name('createfarm');
     Route::post('farm', [FarmController::class, 'store'])->name('farm');
+
+    Route::get('allcustomer', [\App\Http\Controllers\CustomerController::class, 'index'])->name('allcustomer');
+    Route::post('createcustomer', [\App\Http\Controllers\CustomerController::class, 'store'])->name('createcustomer');
+    Route::post('editcustomer', [\App\Http\Controllers\CustomerController::class, 'editstore'])->name('editcustomer');
+    Route::post('deletecustomer', [\App\Http\Controllers\CustomerController::class, 'deletestore'])->name('deletecustomer');
+
+    Route::get('/farm-activities', [\App\Http\Controllers\FarmActivityController::class, 'index'])->name('farm_activities.index');
+    Route::post('/activities', [\App\Http\Controllers\FarmActivityController::class, 'store'])->name('activities');
+
+
+    Route::get('employee', [\App\Http\Controllers\EmployeeController::class, 'create'])->name('employee');
+    Route::post('employ', [\App\Http\Controllers\EmployeeController::class, 'store'])->name('employ');
 
 });
 Route::get('/logout', function(){

@@ -5,13 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FarmUnit extends Model
+class Expense extends Model
 {
     use HasFactory;
     protected $table = 'farmunit';
     protected $guarded=[];
-    public function farmSetup()
-    {
-        return $this->belongsTo(FarmSetup::class);
-    }
 }

@@ -13,7 +13,9 @@ class FarmController
 
     function creaefarmindex()
     {
-        return view('farm');
+        $farm=FarmSetup::with('Units')->get();
+//        return $farm;
+        return view('farm', compact('farm'));
     }
     public function store(Request $request)
     {
@@ -30,6 +32,7 @@ class FarmController
             'name' => $request->input('farmname'),
             'contact_number' => $request->input('number'),
         ]);
+
 
         // Add farm units
         $units = [];
