@@ -15,8 +15,23 @@
         <link rel="shortcut icon" type="image/png" href="{{asset('images/favicon.png')}}">
         <link href="{{asset('vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}" rel="stylesheet">
         <link href="{{asset('css/style.css')}}" rel="stylesheet">
+        <!-- SweetAlert CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+
+        <!-- SweetAlert JS -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
     </head>
     <body class="vh-100">
+    @if($errors->has('login'))
+        <script>
+            Swal.fire({
+                title: 'Ooops..',
+                text: '{{ $errors->first('login') }}',
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+            })
+        </script>
+    @endif
     <div class="authincation h-100">
         <div class="container h-100">
             <div class="row justify-content-center h-100 align-items-center">

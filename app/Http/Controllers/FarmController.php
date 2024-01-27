@@ -7,13 +7,14 @@ namespace App\Http\Controllers;
 use App\Models\FarmSetup;
 use App\Models\FarmUnit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FarmController
 {
 
     function creaefarmindex()
     {
-        $farm=FarmSetup::with('Units')->get();
+        $farm=FarmSetup::where('company_code', Auth::user()->company_code)->with('Units')->get();
 //        return $farm;
         return view('farm', compact('farm'));
     }
@@ -31,6 +32,7 @@ class FarmController
         $farmSetup = FarmSetup::create([
             'name' => $request->input('farmname'),
             'contact_number' => $request->input('number'),
+            'company_code'=>Auth::user()->company_code,
         ]);
 
 

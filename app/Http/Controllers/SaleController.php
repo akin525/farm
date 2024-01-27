@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
 use App\Models\Sale;
+use Illuminate\Support\Facades\Auth;
 use function Termwind\ValueObjects\p;
 
 class SaleController extends Controller
 {
     public function create()
     {
-        $in=Inventory::all();
+        $in=Inventory::where('company_code', Auth::user()->company_code)->get();;
         return view('create', compact('in')); // You need to create this view for the form
     }
 
@@ -33,6 +34,7 @@ class SaleController extends Controller
             'quantity' => $request->input('quantity'),
             'unit_price' => $request->input('unit_price'),
             'sale_date' => $request->input('sale_date'),
+            'company'=>Auth::user()->company_code,
         ]);
 
 

@@ -9,6 +9,7 @@ use App\Models\Payment;
 use App\Models\Purchase;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController
 {
@@ -16,20 +17,23 @@ class DashboardController
     public function mydashboard()
     {
         $today = Carbon::now()->format('Y-m-d');
-        $todaypayment=Payment::where([['created_at', 'LIKE', '%' . $today . '%']])->sum('amount');
-        $todaypaymentnumber=Payment::where([['created_at', 'LIKE', '%' . $today . '%']])->count();
-        $payment=Payment::sum('amount');
+        $todaypayment=Payment::where('company_code', Auth::user()->company_code)
+            ->where([['created_at', 'LIKE', '%' . $today . '%']])->sum('amount');
+        $todaypaymentnumber=Payment::where('company_code', Auth::user()->company_code)
+        ->where([['created_at', 'LIKE', '%' . $today . '%']])->count();
+        $payment=Payment::where('company_code', Auth::user()->company_code)->sum('amount');
         $date = Carbon::now()->format("Y-m");
-        $thisweek= Payment::where([['created_at', 'LIKE', $date . '%']])->sum('amount');
+        $thisweek= Payment::where('company_code', Auth::user()->company_code)
+            ->where([['created_at', 'LIKE', $date . '%']])->sum('amount');
 
-        $todaypurchase=Purchase::where([['created_at', 'LIKE', '%'.$today.'%']])->sum('unit_price');
-        $todaypurchasenumber=Purchase::where([['created_at', 'LIKE', '%'.$today.'%']])->count();
-        $allpurchase=Purchase::sum('unit_price');
+        $todaypurchase=Purchase::where('company_code', Auth::user()->company_code)->where([['created_at', 'LIKE', '%'.$today.'%']])->sum('unit_price');
+        $todaypurchasenumber=Purchase::where('company_code', Auth::user()->company_code)->where([['created_at', 'LIKE', '%'.$today.'%']])->count();
+        $allpurchase=Purchase::where('company_code', Auth::user()->company_code)->sum('unit_price');
 
-        $newuser=User::where([['created_at', 'LIKE', '%' . $today . '%']])->count();
-        $alluser=User::count();
+        $newuser=User::where('company_code', Auth::user()->company_code)->where([['created_at', 'LIKE', '%' . $today . '%']])->count();
+        $alluser=User::where('company_code', Auth::user()->company_code)->count();
 
-        $activities=Activity::orderBy('date', 'ASC')->limit(10)->get();
+        $activities=Activity::where('company_code', Auth::user()->company_code)->orderBy('date', 'ASC')->limit(10)->get();
         return view('dashboard', compact('todaypayment', 'todaypaymentnumber', 'payment',
         'thisweek', 'todaypurchase', 'todaypurchasenumber', 'allpurchase', 'newuser', 'alluser', 'activities'
         ));

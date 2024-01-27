@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -11,7 +12,7 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $customers = Customer::all();
+        $customers = Customer::where('company_code', Auth::user()->company_code)->get();
         return view('customers.index', compact('customers'));
     }
 
@@ -26,12 +27,14 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'contact_number' => 'required|string|max:20',
+            'company_code'=>'required',
         ]);
 
         Customer::create([
             'name' => $request->input('name'),
             'contact_number' => $request->input('contact_number'),
             'status'=>1,
+            'company_code'=>Auth::user()->company_code,
         ]);
 
 //        return redirect()->route('customers.index')->with('success', 'Customer created successfully.');

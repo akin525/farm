@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\Purchase;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseController
 {
@@ -16,9 +17,9 @@ class PurchaseController
         $today = Carbon::now()->format('Y-m-d');
 
 
-        $data =Payment::orderBy('id', 'desc')->paginate(25);
-        $tt = Payment::count();
-        $ft = Payment::where([['created_at', 'like', Carbon::now()->format('Y-m-d') . '%']])->count();
+        $data =Payment::where('company_code', Auth::user()->company_code)->orderBy('id', 'desc')->paginate(25);
+        $tt = Payment::where('company_code', Auth::user()->company_code)->count();
+        $ft = Payment::where('company_code', Auth::user()->company_code)->where([['created_at', 'like', Carbon::now()->format('Y-m-d') . '%']])->count();
         $st = Payment::where([['created_at', 'like', Carbon::now()->subDay()->format('Y-m-d') . '%']])->count();
         $rt = Payment::where([['created_at', 'like', Carbon::now()->subDays(2)->format('Y-m-d') . '%']])->count();
         $amount=Payment::sum('amount');
@@ -35,7 +36,7 @@ class PurchaseController
         $today = Carbon::now()->format('Y-m-d');
 
 
-        $data =Purchase::orderBy('id', 'desc')->paginate(25);
+        $data =Purchase::where('company_code', Auth::user()->company_code)->orderBy('id', 'desc')->paginate(25);
         $tt = Purchase::count();
         $ft = Purchase::where([['purchase_date', 'like', Carbon::now()->format('Y-m-d') . '%']])->count();
         $st = Purchase::where([['purchase_date', 'like', Carbon::now()->subDay()->format('Y-m-d') . '%']])->count();

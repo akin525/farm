@@ -6,22 +6,23 @@ use App\Models\Employee;
 use App\Models\FarmActivity;
 use App\Models\FarmUnit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FarmActivityController extends Controller
 {
     //
     public function index()
     {
-        $farmActivities = FarmActivity::with(['farmUnit', 'employee'])->get();
-        $farmUnits = FarmUnit::all();
-        $employees = Employee::all();
+        $farmActivities = FarmActivity::where('company_code', Auth::user()->company_code)->with(['farmUnit', 'employee'])->get();
+        $farmUnits = FarmUnit::where('company_code', Auth::user()->company_code)->get();;
+        $employees = Employee::where('company_code', Auth::user()->company_code)->get();;
         return view('farm_activities.index', compact('farmActivities', 'farmUnits', 'employees'));
     }
 
     public function create()
     {
-        $farmUnits = FarmUnit::all();
-        $employees = Employee::all();
+        $farmUnits = FarmUnit::where('company_code', Auth::user()->company_code)->get();;
+        $employees = Employee::where('company_code', Auth::user()->company_code)->get();;
         return view('farm_activities.create', compact('farmUnits', 'employees'));
     }
 
@@ -39,6 +40,7 @@ class FarmActivityController extends Controller
             'farm_unit_id' => $request->input('farm_unit_id'),
             'employee_id' => $request->input('employee_id'),
             'activity_name' => $request->input('activity_name'),
+            'company_code'=>Auth::user()->company_code,
         ]);
 
 //        return redirect()->route('farm_activities.index')->with('success', 'Farm activity created successfully.');
@@ -50,7 +52,7 @@ class FarmActivityController extends Controller
 
     public function show($id)
     {
-        $farmActivity = FarmActivity::with(['farmUnit', 'employee'])->find($id);
+        $farmActivity = FarmActivity::where('company_code', Auth::user()->company_code)->with(['farmUnit', 'employee'])->find($id);
         return view('farm_activities.show', compact('farmActivity'));
     }
 }

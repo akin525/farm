@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\FarmUnit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
     //
     public function create()
     {
-        $farmUnits = FarmUnit::all(); // Assuming FarmUnit is your model for farm units
-        $employee=Employee::all();
+        $farmUnits = FarmUnit::where('company_code', Auth::user()->company_code)->get(); // Assuming FarmUnit is your model for farm units
+        $employee=Employee::where('company_code', Auth::user()->company_code)->get();;
         return view('employees.index', compact('employee', 'farmUnits'));
     }
 
@@ -32,7 +33,7 @@ class EmployeeController extends Controller
             'contact_number' => $request->input('contact_number'),
             'salary' => $request->input('salary'),
             'unit' => $request->input('unit'),
-            // Add other fields as needed
+            'company_code'=>Auth::user()->company_code,// Add other fields as needed
         ]);
 //        return redirect()->route('employees.create')->with('success', 'Employee created successfully.');
         return response()->json([

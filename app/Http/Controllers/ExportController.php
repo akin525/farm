@@ -12,6 +12,7 @@ use App\Models\Payment;
 use App\Models\Purchase;
 use App\Models\Sale;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Rap2hpoutre\FastExcel\FastExcel;
 use OpenSpout\Common\Entity\Style\Style;
 
@@ -73,7 +74,7 @@ class ExportController
  }
     function exportalllpayment()
     {
-        $pay = Payment::all();
+        $pay = Payment::where('company_code', Auth::user()->company_code)->get();;
 
 // Export all users
         $header_style = (new Style())->setFontBold();
@@ -93,7 +94,7 @@ class ExportController
     }
     function exportalllpurchase()
     {
-        $pay = Purchase::all();
+        $pay = Purchase::where('company_code', Auth::user()->company_code)->get();;
 
 // Export all users
         $header_style = (new Style())->setFontBold();
@@ -113,7 +114,7 @@ class ExportController
     }
     function exportalllsales()
     {
-        $pay = Sale::all();
+        $pay = Sale::where('company_code', Auth::user()->company_code)->get();;
 
 // Export all users
         $header_style = (new Style())->setFontBold();
@@ -133,7 +134,7 @@ class ExportController
     }
     function exportin()
     {
-        $pay = Inventory::all();
+        $pay = Inventory::where('company_code', Auth::user()->company_code)->get();;
 
 // Export all users
         $header_style = (new Style())->setFontBold();
@@ -153,7 +154,7 @@ class ExportController
     }
     function exportcustomer()
     {
-        $pay = Customer::all();
+        $pay = Customer::where('company_code', Auth::user()->company_code)->get();;
 
 // Export all users
         $header_style = (new Style())->setFontBold();
@@ -173,7 +174,7 @@ class ExportController
     }
     function exportfarm()
     {
-        $pay = FarmSetup::with('Units')->get();
+        $pay = FarmSetup::where('company_code', Auth::user()->company_code)->with('Units')->get();
 
 // Export all users
         $header_style = (new Style())->setFontBold();
@@ -193,7 +194,7 @@ class ExportController
     }
     function exportactive()
     {
-        $pay = FarmActivity::all();
+        $pay = FarmActivity::where('company_code', Auth::user()->company_code)->get();;
 
 // Export all users
         $header_style = (new Style())->setFontBold();

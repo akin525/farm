@@ -1,4 +1,5 @@
 <x-guest-layout>
+
     <div class="authincation-content">
         <div class="row no-gutters">
             <div class="col-xl-12">
@@ -6,21 +7,44 @@
                     <div class="text-center mb-3">
                         <a href="#"><img src="images/logo/logo-full.png" alt=""></a>
                     </div>
-                                    <x-validation-errors class="alert alert-danger" />
 
         @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
                 {{ session('status') }}
             </div>
         @endif
+{{--                    @if($errors->has('login'))--}}
+{{--                        <div class="alert alert-danger">--}}
+{{--                            {{ $errors->first('login') }}--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
 
-        <form method="POST" action="{{ route('login') }}" class=" dz-form pb-3">
+        <form method="POST" action="{{ route('checklogin') }}" class=" dz-form pb-3">
             @csrf
+{{--            <x-validation-errors class="alert alert-danger" />--}}
+{{--            @if($errors->has('login'))--}}
+{{--                <div class="alert alert-danger">--}}
+{{--                    {{ $errors->first('login') }}--}}
+{{--                </div>--}}
+{{--            @endif--}}
             <h3 class="form-title m-t0">Personal Information</h3>
             <div class="dz-separator-outer m-b5">
                 <div class="dz-separator bg-primary style-liner"></div>
             </div>
-            <p>Enter your e-mail address and your password. </p>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <p>Enter your Company code e-mail address and your password. </p>
+            <div class="form-group mb-3">
+                <x-label for="company_code" value="{{ __('company-code') }}" />
+                <x-input id="company_code" class="form-control block mt-1 w-full" type="number" name="company_code" :value="old('company_code')"  autofocus autocomplete="company_code" />
+            </div>
             <div class="form-group mb-3">
                 <x-label for="email" value="{{ __('Email') }}" />
                 <x-input id="email" class="form-control block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />

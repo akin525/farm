@@ -1,6 +1,64 @@
 @extends('layouts.sidebar')
 @section('tittle', 'All Customer')
 @section('content')
+
+    <style>
+        .subscribe {
+            position: relative;
+            padding: 20px;
+            background-color: #FFF;
+            border-radius: 4px;
+            color: #333;
+            box-shadow: 0px 0px 60px 5px rgba(0, 0, 0, 0.4);
+        }
+
+        .subscribe:after {
+            position: absolute;
+            content: "";
+            right: -10px;
+            bottom: 18px;
+            width: 0;
+            height: 0;
+            border-left: 0px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #208b37;
+        }
+
+        .subscribe p {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            line-height: 28px;
+        }
+
+
+
+        .subscribe .submit-btn {
+            position: absolute;
+            border-radius: 30px;
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+            background-color: #208b37;
+            color: #FFF;
+            padding: 12px 25px;
+            display: inline-block;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            right: -10px;
+            bottom: -20px;
+            cursor: pointer;
+            transition: all .25s ease;
+            box-shadow: -5px 6px 20px 0px rgba(26, 26, 26, 0.4);
+        }
+
+        .subscribe .submit-btn:hover {
+            background-color: #208b37;
+            box-shadow: -5px 6px 20px 0px rgba(88, 88, 88, 0.569);
+        }
+    </style>
+
     <div class="row">
         <div class="loading-overlay" id="loadingSpinner" style="display: none;">
             <div class="loading-spinner"></div>
@@ -21,11 +79,20 @@
                 <div class="modal fade" id="newspends">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Create Customer</h5>
+                            <div class="widget-stat card bg-primary">
+                                <div class="card-body  p-4">
+                                    <div class="media">
+									<span class="me-3">
+										<i class="la la-bookmark"></i>
+									</span>
+                                        <div class="media-body text-white">
+                                            <p class="mb-1">Create Customer</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-body">
-                                <form id="farm">
+                                <form id="farm" class="subscribe">
                                     @csrf
 
                                     <div class="form-group">
@@ -38,7 +105,7 @@
                                         <input type="text" name="contact_number" class="form-control" required>
                                     </div>
                                     <br/>
-                                    <button type="submit" class="btn btn-primary">Create Customer</button>
+                                    <button type="submit" class="btn btn-success submit-btn">Create Customer</button>
                                 </form>
                             </div>
                             <div class="modal-footer">

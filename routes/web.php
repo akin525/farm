@@ -23,6 +23,8 @@ use App\Http\Controllers\SaleController;
 Route::get('/', function () {
     return view('auth.login');
 });
+Route::post('checklogin', [\App\Http\Controllers\Auth\LoginController::class, 'customLogin'])->name('checklogin');
+
 
 Route::middleware([
     'auth:sanctum',

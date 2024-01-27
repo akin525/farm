@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FarmActivity extends Model
 {
-    protected $fillable = ['farm_unit_id', 'employee_id', 'activity_name'];
+    protected $fillable = ['farm_unit_id', 'employee_id', 'activity_name', 'company_code'];
 
     public function farmUnit()
     {

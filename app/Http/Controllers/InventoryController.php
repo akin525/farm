@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Inventory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
 {
     //
     function allinventory()
     {
-        $data=Inventory::all();
+        $data=Inventory::where('company_code', Auth::user()->company_code)->get();;
         return view('allinventory', compact('data'));
     }
     public function create()
@@ -32,6 +33,7 @@ class InventoryController extends Controller
             'quantity' => $request->input('quantity'),
             'unit_price' => $request->input('unit_price'),
             'purchase_date' => $request->input('purchase_date'),
+            'company_code'=>Auth::user()->company_code,
         ]);
 
 //        return redirect()->route('inventory/create')->with('success', 'Inventory record created successfully.');

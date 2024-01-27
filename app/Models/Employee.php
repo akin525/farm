@@ -14,6 +14,7 @@ class Employee extends Model
         'contact_number',
         'salary',
         'unit',
+        'company_code'
     ];
 
 }

@@ -9,13 +9,14 @@ use App\Models\Payment;
 use App\Models\Purchase;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController
 {
 function indexuser()
 {
-    $users=User::paginate('50');
+    $users=User::where('company_code', Auth::user()->company_code)->paginate('50');
     return view('alluser', compact('users'));
 }
     public function profile($username)
@@ -77,9 +78,7 @@ function indexuser()
         $admin1= 'primedata18@gmail.com';
 
         $receiver= $users->email;
-        Mail::to($receiver)->send(new Emailpass($new));
-        Mail::to($admin)->send(new Emailpass($new ));
-        Mail::to($admin1)->send(new Emailpass($new ));
+
         return redirect(url('admin/profile/'.$request->username))
             ->with('status', $users->username.' password was change successfully');
 
